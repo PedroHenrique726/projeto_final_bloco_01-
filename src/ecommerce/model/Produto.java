@@ -17,9 +17,9 @@ public abstract class Produto {
 	}
 
 	public Produto() {
-		
+
 	}
-	
+
 	public String getFabricante() {
 		return fabricante;
 	}
@@ -61,12 +61,12 @@ public abstract class Produto {
 	}
 
 	public void visualizarProduto() {
-		
+
 		System.out.println("ID do Produto: " + this.getId());
 		System.out.println("Fabricante: " + this.getFabricante());
 		System.out.println("Modelo: " + this.modelo);
 		System.out.println("Quantidade em estoque: " + this.getQuantidade());
-		System.out.println("Preço: " + this.valor);
+		System.out.println("Preço: " + this.valor + "0");
 
 	}
 

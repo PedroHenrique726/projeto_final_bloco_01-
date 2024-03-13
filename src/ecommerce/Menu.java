@@ -1,61 +1,105 @@
 package ecommerce;
 
 import java.io.IOException;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import ecommerce.controller.EcommerceController;
 import ecommerce.model.Celular;
 
 public class Menu {
 	public static void main(String[] args) {
 
+		EcommerceController produtos = new EcommerceController();
+
 		Scanner sc = new Scanner(System.in);
 		String opcao = "";
+		String fabricante, modelo;
+		int quantidade, android, id;
+		float valor;
 
-		Celular c1 = new Celular("Motorola", "Moto G04", 1, 762.00f, 100, 14);
-		Celular c2 = new Celular();
-		
-		c2.setFabricante("Asus");
-		c2.setId(2);
-		c2.setModelo("Zenfone 10");
-		c2.setAndroid(13);
-		c2.setQuantidade(500);
-		c2.setValor(4468.0f);
-		
-		c1.visualizarProduto();
-		System.out.println();
-		c2.visualizarProduto();
-		
 		boasVindas();
 
 		do {
 
 			System.out.println("\n\n\n\nSelecione uma opção:");
 			System.out.println("(C)adastrar, (A)tualizar, (L)istar, (D)eletar itens ou digite (S)air.");
-			opcao = sc.nextLine().toLowerCase();
+
+			try {
+				String input = sc.nextLine().toLowerCase();
+				if (input.matches("[a-z]+")) {
+					opcao = input;
+				}
+			} catch (InputMismatchException e) {
+				System.out.println("\nEntrada Invalida. Digite apenas letras\n");
+				sc.nextLine();
+				opcao = "";
+				;
+			}
 
 			switch (opcao) {
 			case "c":
 			case "cadastrar":
-				System.out.println("Cadastrar produto\n");
+				System.out.println("Cadastrar novo Celular\n");
+				System.out.println("Digite o Fabricante: ");
+				fabricante = sc.nextLine();
+				System.out.println("Digite o Modelo: ");
+				modelo = sc.nextLine();
+				System.out.println("Digite a Quantidade: ");
+				quantidade = sc.nextInt();
+				System.out.println("Digite o valor: ");
+				valor = sc.nextFloat();
+				System.out.println("Digite o Android do celular: ");
+				android = sc.nextInt();
+
+				produtos.cadastrarProduto(
+						new Celular(fabricante, modelo, produtos.gerarID(), valor, quantidade, android));
+				;
 				keyPress();
+				sc.skip("\\R?");
 				sc.skip("\\R?");
 				break;
 			case "a":
 			case "atualizar":
-				System.out.println("Atualizar produto\n");
+				System.out.println("Atualizar Produto\n");
+				System.out.println("Digite o ID do Produto a ser atualizado: ");
+				id = sc.nextInt();
+				System.out.println("Atualize o Novo Fabricante do Produto: ");
+				sc.skip("\\R?");
+				fabricante = sc.nextLine();
+				System.out.println("Atualize o Novo Modelo do Produto: ");
+				modelo = sc.nextLine();
+				System.out.println("Atualize a Nova Quantidade do Produto: ");
+				quantidade = sc.nextInt();
+				System.out.println("Atualize o Novo Valor do Produto: ");
+				valor = sc.nextFloat();
+				System.out.println("Atualize o Novo Android do Produto: ");
+				android = sc.nextInt();
+
+				produtos.atualizarProduto(new Celular(fabricante, modelo, id, valor, quantidade, android), id);
+
 				keyPress();
+				sc.skip("\\R?");
 				sc.skip("\\R?");
 				break;
 			case "l":
 			case "listar":
-				System.out.println("Listar produto\n");
+				System.out.println("Lista de Produtos: \n");
+				produtos.listarTodosProdutos();
+
 				keyPress();
 				sc.skip("\\R?");
 				break;
 			case "d":
 			case "deletar":
-				System.out.println("Deletar produto\n");
+				System.out.println("Deletar Produto\n");
+				System.out.println("Digite o ID do produto a ser deletado: ");
+				id = sc.nextInt();
+
+				produtos.deletarProduto(id);
+
 				keyPress();
+				sc.skip("\\R?");
 				sc.skip("\\R?");
 				break;
 			case "s":

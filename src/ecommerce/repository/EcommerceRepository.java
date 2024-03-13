@@ -1,13 +1,15 @@
 package ecommerce.repository;
 
-import ecommerce.model.Produto;
+import ecommerce.model.Celular;
 
 public interface EcommerceRepository {
 
 	public void listarTodosProdutos();
-	public void cadastrarProduto();
-	public void deletarProduto();
-	public void atualizarProduto();
-	
-	
+
+	public void cadastrarProduto(Celular celular);
+
+	public void deletarProduto(int id);
+
+	public void atualizarProduto(Celular celular, int id);
+
 }
